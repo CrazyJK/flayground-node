@@ -1,17 +1,9 @@
-import { useEffect } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import axios from 'axios';
+import Flay from './Flay';
 
 function App() {
-	const callApi = async () => {
-		axios.get('/api').then((res) => console.log(res.data.test));
-	};
-
-	useEffect(() => {
-		callApi();
-	}, []);
-
+	const opus = 'SSIS-123';
 	return (
 		<div className="App">
 			<header className="App-header">
@@ -19,6 +11,9 @@ function App() {
 				<p>
 					Edit <code>src/App.js</code> and save to reload.
 				</p>
+				<div>
+					<Flay opus={opus} />
+				</div>
 				<a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
 					Learn React1
 				</a>
