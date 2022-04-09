@@ -1,13 +1,18 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { useData } from "./lib/useData";
+import { useData } from './lib/useData';
 
 import Flay from './Flay';
 import PagingContainer from './PagingContainer';
 import FlayFilter from './FlayFilter';
 
-async function callApi() {
-	const response = await axios.get('/api');
+async function callFlayList() {
+	const response = await axios.get('/api/flay/list');
+	return response.data;
+}
+
+async function callTagList() {
+	const response = await axios.get('/api/tag');
 	return response.data;
 }
 
@@ -16,12 +21,6 @@ function isEmptyObject(param) {
 }
 
 function FlayContainer() {
-	// 페이징
-	const [pageIndex, setPageIndex] = useState(0);
-	function handlePageClick(pageIndex) {
-		setPageIndex(pageIndex);
-	}
-
 	// 필터링
 	const [filter, setFilter] = useState({});
 	function handleFilter(filterContext) {
@@ -30,18 +29,19 @@ function FlayContainer() {
 	}
 
 	// 목록 구해서 filtering 하기
-	const { loading, data, error, reload } = useData(callApi);
-	console.log('[FlayContainer] flayList', loading, data, error);
-	
+	const { loading, data, error, reload } = useData(callFlayList);
+	console.log('[FlayContainer] flayList', loading, !!data, error);
+
 	let flayList;
 	if (!loading && !!data && !error) {
-		flayList = data;
-		
 		console.log('[FlayContainer] filter isEmptyObject', isEmptyObject(filter));
 		if (!isEmptyObject(filter)) {
 			flayList = data.filter((flay) => {
-				if (filter.keyword && flay.toString().indexOf(filter.keyword) === -1) {
-					return false;
+				if (filter.keyword) {
+					const flayFullText = `${flay.studio} ${flay.opus} ${flay.title} ${flay.actress.join(' ')} ${flay.release} `;
+					if (flayFullText.indexOf(filter.keyword) === -1) {
+						return false;
+					}
 				}
 				if (!filter.rank0 && flay.video.rank === 0) {
 					return false;
@@ -62,24 +62,43 @@ function FlayContainer() {
 					return false;
 				}
 				return true;
-			})
+			});
+		} else {
+			flayList = data;
+		}
+
+		console.log('flayList.length', flayList.length);
+		if (flayList.length > 0) {
+			flayList.sort((f1, f2) => f2.release.localeCompare(f1.release));
 		}
 	}
-	
-	
-    return (
-		<div className='flay-container'>
-			<div className='filter-wrap'>
+
+	// 페이징
+	const [pageIndex, setPageIndex] = useState(Math.round(Math.random() * (flayList?.length || 0)));
+	function handlePageClick(pageIndex) {
+		setPageIndex(pageIndex);
+	}
+
+	const tagData = useData(callTagList)?.data;
+	console.log('tagData.length', tagData?.length);
+
+	return (
+		<div className="flay-container">
+			<div className="filter-wrap box-shadow">
 				<FlayFilter filterContext={filter} handleFilter={handleFilter} reload={reload} />
 			</div>
-			<div className='flay-wrap'>
-				{!loading && !!data && !error && <Flay flay={flayList[pageIndex]} />}
-			</div>
-			<div className='paging-wrap'>
-				<PagingContainer curr={pageIndex} size={flayList?.length} handleClick={handlePageClick} />
-			</div>
+			{!loading && !!data && !error && flayList.length > 0 && (
+				<>
+					<div className="flay-wrap">
+						<Flay flay={flayList[pageIndex]} tags={tagData} />
+					</div>
+					<div className="paging-wrap">
+						<PagingContainer curr={pageIndex} size={flayList?.length} handleClick={handlePageClick} />
+					</div>
+				</>
+			)}
 		</div>
-    );
+	);
 }
 
 export default FlayContainer;
