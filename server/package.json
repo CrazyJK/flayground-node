@@ -1,0 +1,19 @@
+{
+  "name": "flay-js",
+  "version": "0.1.0",
+  "private": true,
+  "author": "kamoru",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "nodemon": "nodemon ./server.js",
+    "start": "node ./server.js"
+  },
+  "dependencies": {
+    "express": "^4.17.3",
+    "properties-reader": "^2.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}

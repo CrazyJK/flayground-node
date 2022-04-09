@@ -1,6 +1,3 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-solid-svg-icons';
-
 function FlayFilter(props) {
 	const filterContext = {
 		keyword: '',
@@ -35,9 +32,7 @@ function FlayFilter(props) {
 			<div className="filter-item">
 				<label>
 					<input type="checkbox" id="rank0" onChange={handleRank} checked={filterContext.rank0} />
-					<span>
-						<FontAwesomeIcon icon={faStar} />
-					</span>
+					<span>0</span>
 				</label>
 				<label>
 					<input type="checkbox" id="rank1" onChange={handleRank} checked={filterContext.rank1} />
