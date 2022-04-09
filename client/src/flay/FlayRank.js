@@ -1,35 +1,56 @@
+import { useState } from 'react';
+
 function FlayRank(props) {
-	function handleRank(e) {}
+	const [selectedRank, setSelectedRank] = useState(props.rank);
+
+	function handleRank(e) {
+		setSelectedRank(parseInt(e.target.value));
+		props.handleRank(selectedRank);
+	}
 
 	return (
-		<div className="react-component">
-			<label>
-				<input type="radio" id="rank-1" onChange={handleRank} checked={props.rank === -1} />
-				<span>-1</span>
+		<div className="flay-rank r-c">
+			<label className="mr-1">
+				<input type="radio" id="rank-1" onChange={handleRank} checked={selectedRank === -1} value={-1} />
+				<span>
+					<i className="fa fa-thumbs-down"></i>
+				</span>
+			</label>
+			<label className="mr-1">
+				<input type="radio" id="rank0" onChange={handleRank} checked={selectedRank === 0} value={0} />
+				<span>
+					<i className="fa fa-circle"></i>
+				</span>
+			</label>
+			<label className="mr-1">
+				<input type="radio" id="rank1" onChange={handleRank} checked={selectedRank === 1} value={1} />
+				<span>
+					<i className="fa fa-star"></i>
+				</span>
+			</label>
+			<label className="mr-1">
+				<input type="radio" id="rank2" onChange={handleRank} checked={selectedRank === 2} value={2} />
+				<span>
+					<i className="fa fa-star"></i>
+				</span>
+			</label>
+			<label className="mr-1">
+				<input type="radio" id="rank3" onChange={handleRank} checked={selectedRank === 3} value={3} />
+				<span>
+					<i className="fa fa-star"></i>
+				</span>
+			</label>
+			<label className="mr-1">
+				<input type="radio" id="rank4" onChange={handleRank} checked={selectedRank === 4} value={4} />
+				<span>
+					<i className="fa fa-star"></i>
+				</span>
 			</label>
 			<label>
-				<input type="radio" id="rank0" onChange={handleRank} checked={props.rank === 0} />
-				<span>0</span>
-			</label>
-			<label>
-				<input type="radio" id="rank1" onChange={handleRank} checked={props.rank === 1} />
-				<span>1</span>
-			</label>
-			<label>
-				<input type="radio" id="rank2" onChange={handleRank} checked={props.rank === 2} />
-				<span>2</span>
-			</label>
-			<label>
-				<input type="radio" id="rank3" onChange={handleRank} checked={props.rank === 3} />
-				<span>3</span>
-			</label>
-			<label>
-				<input type="radio" id="rank4" onChange={handleRank} checked={props.rank === 4} />
-				<span>4</span>
-			</label>
-			<label>
-				<input type="radio" id="rank5" onChange={handleRank} checked={props.rank === 5} />
-				<span>5</span>
+				<input type="radio" id="rank5" onChange={handleRank} checked={selectedRank === 5} value={5} />
+				<span>
+					<i className="fa fa-star"></i>
+				</span>
 			</label>
 		</div>
 	);

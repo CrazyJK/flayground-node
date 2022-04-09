@@ -23,7 +23,7 @@ function PagingContainer(props) {
 		pagings.push(<PageItem key={max - 1} pageIndex={max - 1} currentIndex={curr} handleClick={props.handleClick} />);
 	}
 
-	return <div className="pagination react-component">{pagings}</div>;
+	return <div className="pagination r-c">{pagings}</div>;
 }
 
 export default PagingContainer;

@@ -4,7 +4,7 @@ function FlayCover(props) {
 		...props,
 	};
 
-	return <div className="flay-cover react-component" style={{ backgroundImage: 'url(/api/cover/' + opus + ')' }}></div>;
+	return <div className="cover r-c" style={{ backgroundImage: 'url(/api/cover/' + opus + ')' }}></div>;
 }
 
 export default FlayCover;

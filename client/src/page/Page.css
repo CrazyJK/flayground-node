@@ -2,16 +2,17 @@
 .pagination {
 	display: flex;
 	justify-content: center;
+	overflow: hidden;
 }
 
 .pagination .page-item {
 	display: inline-block;
 	background-color: transparent;
 	cursor: pointer;
-	font-size: 100%;
+	font-size: 0.875rem;
 	margin: 0;
 	border: 1px solid #ccc;
-	padding: 0.25rem;
+	padding: 0.5rem;
 	min-width: 3rem;
 }
 

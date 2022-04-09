@@ -1,25 +1,27 @@
-import { useData } from '../lib/useData';
-import axios from 'axios';
 import Actress from './Actress';
 
 function ActressContainer(props) {
-	console.log('[ActressContainer] props.list', props.actress);
+	console.debug('[ActressContainer] actress names', props.actress);
 
-	const { loading, data, error } = useData(async () => {
-		const promiseAxiosList = props.actress.map((name) => axios.get('/api/actress/' + name));
-		return await Promise.all(promiseAxiosList);
-	});
-	console.log('[ActressContainer] actress', loading, data, error);
+	const actressList = props.actressList.filter((actress) => props.actress.includes(actress.name));
+
+	/* -- 컴포넌트로 부터 전달되는 함수 -- */
+	function handleUpdate(actress) {
+		for (let element of props.actressList) {
+			if (element.name === actress.name) {
+				element = actress;
+			}
+		}
+		console.log('TODO 배우 정보 업데이트', actress);
+	}
 
 	return (
-		<div className="react-component">
-			{!loading && !!data && !error && (
-				<div className="actress-wrap">
-					{data.map((res) => (
-						<Actress actress={res.data} key={res.data.name} />
-					))}
-				</div>
-			)}
+		<div className="r-c">
+			<div className="f-v">
+				{actressList.map((actress) => (
+					<Actress key={actress.name} actress={actress} handleUpdate={handleUpdate} />
+				))}
+			</div>
 		</div>
 	);
 }

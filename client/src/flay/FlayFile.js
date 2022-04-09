@@ -1,50 +1,65 @@
+import { useState } from 'react';
+
 function FlayFile(props) {
 	const { movieSize, subtitlesSize } = {
-		movieSize: props.files.movie.length,
-		subtitlesSize: props.files.subtitles.length,
+		movieSize: props.flay.files.movie.length,
+		subtitlesSize: props.flay.files.subtitles.length,
 	};
 
-	const files = [props.files.cover, ...props.files.movie, ...props.files.subtitles];
-	console.log('files', files);
+	const files = [props.flay.files.cover, ...props.flay.files.movie, ...props.flay.files.subtitles];
 
-	function handleMovieClick(e) {}
+	const [isToggle, setIsToggle] = useState(false);
+	const handleFilesClick = (e) => {
+		setIsToggle(!isToggle);
+	};
 
-	function handleSubClick(e) {}
+	function handleSubClick() {
+		if (props.flay.files.subtitles.length === 0) {
+			console.log('TODO 자막 찾기 팝업 열기', props.flay.opus);
+		}
+	}
 
-	function handleFilesClick(e) {
-		// document.querySelector('.files-list')
+	function handleDeleteBtnClick(e) {
+		const selectedFileIndex = e.target.dataset.index;
+		props.handleDeleteFile(files[selectedFileIndex]);
+	}
+
+	function handleOpenFile(e) {
+		console.log('TODO 클릭한 파일 탐색기로 열기', files[e.target.dataset.index]);
 	}
 
 	return (
-		<div className="react-component">
-			<div className="files-wrap">
-				<button type="button" onClick={handleMovieClick}>
+		<div className="r-c">
+			<div className="my-2 f-h">
+				<button type="button" onClick={props.handlePlay} className="ft-l p-1">
 					{movieSize > 0 ? 'Movie' : 'noMovie'}
 				</button>
-				<button type="button" onClick={handleSubClick}>
+				<button type="button" onClick={handleSubClick} className="ft-l p-1">
 					{subtitlesSize > 0 ? 'Sub' : 'noSub'}
 				</button>
-				<button type="button" onClick={handleFilesClick}>
-					files
+				<button type="button" onClick={handleFilesClick} className="ft-l p-1">
+					<i className="fa fa-folder-open"></i>
 				</button>
 			</div>
-			<div className="files-list">
-				{files.map((file, index) => (
-					<div className="file-item" key={index}>
-						<label className="file-path">{file.path}</label>
-						<label className="file-name" title={file.name}>
-							{getOnlyName(file.name)}
-						</label>
-						<label className="file-size">{prettySize(file.size)}</label>
-						<label className="file-ext">{file.ext.substring(1)}</label>
-						{index !== 0 && (
-							<button className="file-delete-btn" title="delete this file">
-								x
-							</button>
-						)}
-					</div>
-				))}
-			</div>
+			{isToggle && (
+				<div className="my-2">
+					{files.map((file, index) => (
+						<div className="f-h jc-sb ft-s my-1" key={index}>
+							<label className="f-1-1-a">{file.path}</label>
+							<label className="f-1-1-a n-w" title={file.name} onClick={handleOpenFile} data-index={index}>
+								{getOnlyName(file.name)}
+							</label>
+							<label className="ws-no">{prettySize(file.size)}</label>
+							<label>{file.ext.substring(1)}</label>
+							{index !== 0 && (
+								<button className="c-red ft-n" title="delete this file" onClick={handleDeleteBtnClick} data-index={index}>
+									<i className="fa fa-times" data-index={index}></i>
+								</button>
+							)}
+						</div>
+					))}
+				</div>
+			)}
 		</div>
 	);
 }

@@ -3,35 +3,40 @@ import { useData } from '../lib/useData';
 import axios from 'axios';
 
 import './Flay.css';
-import Flay from './Flay';
-import FlayFilter from './FlayFilter';
-import PagingContainer from '../page/PagingContainer';
+import FlayFrame from './FlayFrame';
 
 function FlayContainer() {
 	// 필터 조건
 	const [filter, setFilter] = useState({});
-	function handleFilter(filterContext) {
-		console.log('[FlayContainer] handleFilter', filterContext);
+	const handleFilter = (filterContext) => {
+		console.log('handleFilter', filterContext);
 		setFilter(filterContext);
-	}
+	};
 
-	// 페이징
-	const [pageIndex, setPageIndex] = useState(0);
-	function handlePageClick(pageIndex) {
-		setPageIndex(pageIndex);
-	}
+	const { loading, data, error, reload } = useData(async () => {
+		const results = await Promise.all([axios.get('/api/flay/list'), axios.get('/api/tag'), axios.get('/api/actress')]);
+
+		const flayList = results[0].data || [];
+		const tagList = results[1].data || [];
+		const actressList = results[2].data || [];
+
+		// tag sort
+		tagList.sort((t1, t2) => t1.name.localeCompare(t2.name));
+
+		console.log(` in useData. flay=${flayList.length} tag=${tagList.length} actress=${actressList.length}`);
+
+		return [flayList, tagList, actressList];
+	});
 
 	let flayList = [];
 	let tagList = [];
-	const { loading, data, error, reload } = useData(async () => {
-		return await Promise.all([axios.get('/api/flay/list'), axios.get('/api/tag')]);
-	});
+	let actressList = [];
+	let randomIndex = 0;
 
 	if (!loading && !!data && !error) {
-		flayList = data[0].data || [];
-		tagList = data[1].data || [];
+		[flayList, tagList, actressList] = data;
 
-		// filter
+		// flay filter
 		if (!isEmptyObject(filter)) {
 			flayList = flayList.filter((flay) => {
 				if (filter.keyword) {
@@ -50,30 +55,27 @@ function FlayContainer() {
 				return true;
 			});
 		}
-
-		// sort
+		// flay sort
 		if (flayList.length > 0) {
 			flayList.sort((f1, f2) => f2.release.localeCompare(f1.release));
 		}
-		console.log('filtered flay list length', flayList.length);
+
+		// random pageIndex
+		randomIndex = Math.round(Math.random() * flayList.length);
+
+		console.log(`out useData. flay=${flayList.length} tag=${tagList.length} actress=${actressList.length} random=${randomIndex}`);
 	}
 
 	return (
-		<div className="flay-container">
-			<div className="filter-wrap">
-				<FlayFilter filterContext={filter} handleFilter={handleFilter} reload={reload} />
-			</div>
-			{!loading && !!data && !error && flayList.length > 0 && (
-				<>
-					<div className="flay-wrap">
-						<Flay flay={flayList[pageIndex]} tags={tagList} />
-					</div>
-					<div className="paging-wrap">
-						<PagingContainer curr={pageIndex} max={flayList?.length} offset={5} handleClick={handlePageClick} />
-					</div>
-				</>
+		<>
+			{!loading && !error && !!data && (
+				<div className="f-v h-100vh r-c">
+					<FlayFrame filter={filter} handleFilter={handleFilter} flayList={flayList} tagList={tagList} actressList={actressList} randomIndex={randomIndex} reload={reload} />
+				</div>
 			)}
-		</div>
+			{!loading && !!error && <div>{error}</div>}
+			{loading && <div>Loading...</div>}
+		</>
 	);
 }
 

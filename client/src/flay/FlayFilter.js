@@ -25,38 +25,52 @@ function FlayFilter(props) {
 	}
 
 	return (
-		<div className="filter react-component">
-			<div className="filter-item">
-				<input type="search" id="keyword" onKeyUp={handleSearch} />
+		<div className="f-h py-2 r-c ft-l">
+			<div>
+				<input type="search" id="keyword" onKeyUp={handleSearch} placeholder="Search..." className="lh-16" />
 			</div>
-			<div className="filter-item">
-				<label>
+			<div>
+				<label className="mr-1">
 					<input type="checkbox" id="rank0" onChange={handleRank} checked={filterContext.rank0} />
-					<span>0</span>
+					<span>
+						<i className="fa fa-circle"></i>
+					</span>
 				</label>
-				<label>
+				<label className="mr-1">
 					<input type="checkbox" id="rank1" onChange={handleRank} checked={filterContext.rank1} />
-					<span>1</span>
+					<span>
+						<i className="fa fa-star"></i>
+					</span>
 				</label>
-				<label>
+				<label className="mr-1">
 					<input type="checkbox" id="rank2" onChange={handleRank} checked={filterContext.rank2} />
-					<span>2</span>
+					<span>
+						<i className="fa fa-star"></i>
+					</span>
 				</label>
-				<label>
+				<label className="mr-1">
 					<input type="checkbox" id="rank3" onChange={handleRank} checked={filterContext.rank3} />
-					<span>3</span>
+					<span>
+						<i className="fa fa-star"></i>
+					</span>
 				</label>
-				<label>
+				<label className="mr-1">
 					<input type="checkbox" id="rank4" onChange={handleRank} checked={filterContext.rank4} />
-					<span>4</span>
+					<span>
+						<i className="fa fa-star"></i>
+					</span>
 				</label>
 				<label>
 					<input type="checkbox" id="rank5" onChange={handleRank} checked={filterContext.rank5} />
-					<span>5</span>
+					<span>
+						<i className="fa fa-star"></i>
+					</span>
 				</label>
 			</div>
 			<div>
-				<button onClick={props.reload}>reload</button>
+				<button onClick={props.reload} className="ft-l">
+					<i className="fa fa-sync"></i>
+				</button>
 			</div>
 		</div>
 	);
