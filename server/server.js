@@ -1,10 +1,16 @@
-const express = require('express');
+import express from 'express';
+import flayApiRouter from './Router/flayApiRouter.js';
+// import cors from 'cors';
+
 const app = express();
-const test = require('./Router/test');
-// const cors = require('cors');
+const port = process.env.PORT || 5000;
 
 // app.use(cors());
-app.use('/api', test);
-
-const port = 5000;
-app.listen(port, () => console.log(`${port}`));
+app.use('/api', flayApiRouter);
+app.listen(port, () => {
+	console.log(`
+    ############################################
+        Flay server start. Listening on ${port}
+    ############################################
+	`);
+});

@@ -1,3 +1,6 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
+
 function FlayFilter(props) {
 	const filterContext = {
 		keyword: '',
@@ -11,29 +14,30 @@ function FlayFilter(props) {
 	};
 
 	function handleSearch(e) {
-		console.log('[FlayFilter] search', e.keyCode, e.target.id, e.target.value);
 		if (e.keyCode !== 13) return;
-		filterContext[e.target.id] = e.target.value;
-		console.log('[FlayFilter] filterContext', filterContext);
+
+		filterContext[e.target.id] = e.target.value.trim();
+		console.log('handleSearch', e.keyCode, e.target.id, e.target.value, filterContext);
 		props.handleFilter(filterContext);
 	}
 
 	function handleRank(e) {
-		console.log('[FlayFilter] rank', e.target.id, e.target.checked);
 		filterContext[e.target.id] = e.target.checked;
-		console.log('[FlayFilter] filterContext', filterContext);
+		console.log('handleRank', e.target.id, e.target.checked, filterContext);
 		props.handleFilter(filterContext);
 	}
 
 	return (
-		<div className="react-component">
-			<div>
+		<div className="filter react-component">
+			<div className="filter-item">
 				<input type="search" id="keyword" onKeyUp={handleSearch} />
 			</div>
-			<div>
+			<div className="filter-item">
 				<label>
 					<input type="checkbox" id="rank0" onChange={handleRank} checked={filterContext.rank0} />
-					<span>0</span>
+					<span>
+						<FontAwesomeIcon icon={faStar} />
+					</span>
 				</label>
 				<label>
 					<input type="checkbox" id="rank1" onChange={handleRank} checked={filterContext.rank1} />

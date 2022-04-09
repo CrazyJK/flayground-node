@@ -1,27 +1,29 @@
+import './Page.css';
 import PageItem from './PageItem';
 
 function PagingContainer(props) {
-	const { curr, size } = {
+	const { curr, max, offset } = {
 		curr: 0,
-		size: 1,
+		max: 1,
+		offset: 5,
 		...props,
 	};
 
-	const start = Math.max(0, curr - 5);
-	const end = Math.min(size, curr + 6);
+	const start = Math.max(0, curr - offset);
+	const end = Math.min(max, curr + offset + 1);
 
 	let pagings = [];
 	if (start > 0) {
-		pagings.push(<PageItem pageIndex={0} curr={curr} key={0} handleClick={props.handleClick} />);
+		pagings.push(<PageItem key={0} pageIndex={0} currentIndex={curr} handleClick={props.handleClick} />);
 	}
 	for (let i = start; i < end; i++) {
-		pagings.push(<PageItem pageIndex={i} curr={curr} key={i} handleClick={props.handleClick} />);
+		pagings.push(<PageItem key={i} pageIndex={i} currentIndex={curr} handleClick={props.handleClick} />);
 	}
-	if (end < size) {
-		pagings.push(<PageItem pageIndex={size - 1} curr={curr} key={size - 1} handleClick={props.handleClick} />);
+	if (end < max) {
+		pagings.push(<PageItem key={max - 1} pageIndex={max - 1} currentIndex={curr} handleClick={props.handleClick} />);
 	}
 
-	return <div className="pagination">{pagings}</div>;
+	return <div className="pagination react-component">{pagings}</div>;
 }
 
 export default PagingContainer;
