@@ -26,7 +26,7 @@ function FlayFilter(props) {
 	}
 
 	return (
-		<>
+		<div className="react-component">
 			<div>
 				<input type="search" id="keyword" onKeyUp={handleSearch} />
 			</div>
@@ -59,7 +59,7 @@ function FlayFilter(props) {
 			<div>
 				<button onClick={props.reload}>reload</button>
 			</div>
-		</>
+		</div>
 	);
 }
 

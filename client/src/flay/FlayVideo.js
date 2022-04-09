@@ -4,22 +4,22 @@ function FlayVideo(props) {
 	console.log('[FlayVideo] props.video', props.video);
 
 	return (
-		<>
+		<div className="react-component">
 			<div className="flay-video">
 				<label>
 					<FlayRank rank={props.video.rank} />
 				</label>
-				<label className="box-shadow">Play {props.video.play}</label>
-				<label className="box-shadow">{new Date(props.video.lastAccess).toLocaleDateString()}</label>
+				<label>Play {props.video.play}</label>
+				<label>{new Date(props.video.lastAccess).toLocaleDateString()}</label>
 			</div>
 			<div>
-				<p className="box-shadow">{props.video.comment}</p>
-				<details className="box-shadow">
+				<p>{props.video.comment}</p>
+				<details>
 					<summary>{props.video.title}</summary>
 					<p>{props.video.desc}</p>
 				</details>
 			</div>
-		</>
+		</div>
 	);
 }
 

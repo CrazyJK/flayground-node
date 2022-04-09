@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import axios from 'axios';
-import { useData } from './lib/useData';
+import { useData } from '../lib/useData';
 
 import Flay from './Flay';
-import PagingContainer from './PagingContainer';
 import FlayFilter from './FlayFilter';
+import PagingContainer from '../page/PagingContainer';
 
 async function callFlayList() {
 	const response = await axios.get('/api/flay/list');
@@ -83,8 +83,8 @@ function FlayContainer() {
 	console.log('tagData.length', tagData?.length);
 
 	return (
-		<div className="flay-container">
-			<div className="filter-wrap box-shadow">
+		<div className="flay-container react-component">
+			<div className="filter-wrap">
 				<FlayFilter filterContext={filter} handleFilter={handleFilter} reload={reload} />
 			</div>
 			{!loading && !!data && !error && flayList.length > 0 && (

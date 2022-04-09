@@ -1,10 +1,8 @@
 import './App.css';
-import FlayContainer from './FlayContainer';
+import FlayContainer from './flay/FlayContainer';
 
 function App() {
-	return (
-		<FlayContainer />
-	);
+	return <FlayContainer />;
 }
 
 export default App;

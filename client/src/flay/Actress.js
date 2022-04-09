@@ -12,7 +12,7 @@ function Actress(props) {
 	}, [isFavorite]);
 
 	return (
-		<div className="actress">
+		<div className="actress react-component">
 			<label>{props.actress.name}</label>
 			<label className="actress-favorite">
 				<input type="checkbox" checked={isFavorite} onChange={handleChangeFavorite} />

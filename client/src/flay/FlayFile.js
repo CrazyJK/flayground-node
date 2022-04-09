@@ -16,19 +16,19 @@ function FlayFile(props) {
 	}
 
 	return (
-		<>
+		<div className="react-component">
 			<div className="files-wrap">
-				<button type="button" className="box-shadow" onClick={handleMovieClick}>
+				<button type="button" onClick={handleMovieClick}>
 					{movieSize > 0 ? 'Movie' : 'noMovie'}
 				</button>
-				<button type="button" className="box-shadow" onClick={handleSubClick}>
+				<button type="button" onClick={handleSubClick}>
 					{subtitlesSize > 0 ? 'Sub' : 'noSub'}
 				</button>
-				<button type="button" className="box-shadow" onClick={handleFilesClick}>
+				<button type="button" onClick={handleFilesClick}>
 					files
 				</button>
 			</div>
-			<div className="files-list box-shadow">
+			<div className="files-list">
 				{files.map((file, index) => (
 					<div className="file-item" key={index}>
 						<label className="file-path">{file.path}</label>
@@ -45,7 +45,7 @@ function FlayFile(props) {
 					</div>
 				))}
 			</div>
-		</>
+		</div>
 	);
 }
 

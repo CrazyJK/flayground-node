@@ -8,13 +8,13 @@ function Flay(props) {
 	console.log('[Flay] props.flay', props.flay);
 
 	return (
-		<div className="flay">
+		<div className="flay react-component">
 			<div className="flay-info">
-				<label className="box-shadow">{props.flay.studio}</label>
-				<label className="box-shadow">{props.flay.opus}</label>
-				<label className="box-shadow">{props.flay.release}</label>
+				<label>{props.flay.studio}</label>
+				<label>{props.flay.opus}</label>
+				<label>{props.flay.release}</label>
 			</div>
-			<div className="box-shadow">
+			<div>
 				<label className="flay-title">{props.flay?.title}</label>
 			</div>
 			<FlayCover opus={props.flay.opus} />
