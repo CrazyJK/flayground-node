@@ -136,6 +136,9 @@
 .h-100vh {
 	min-height: 100vh;
 }
+.h-2rem {
+	min-height: 2rem;
+}
 
 /* line-height */
 .lh-16 {

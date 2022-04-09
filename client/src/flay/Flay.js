@@ -32,7 +32,7 @@ function Flay(props) {
 
 	return (
 		<div className="w-f ft-l r-c">
-			<div className="f-h my-2">
+			<div className="f-h my-2 h-2rem">
 				<label>{props.flay.studio}</label>
 				<label onClick={handleOpenVideo}>{props.flay.opus}</label>
 				<label>{props.flay.release}</label>
