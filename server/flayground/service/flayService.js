@@ -40,4 +40,22 @@ export default {
 		flay.video.lastAccess = Date.now();
 		videoService.save(flay.video);
 	},
+	filter: (filter) => {
+		return flaySource.list().filter((flay) => {
+			if (filter.keyword) {
+				const flayFullText = `${flay.studio} ${flay.opus} ${flay.title} ${flay.actress.join(' ')} ${flay.release} `;
+				if (flayFullText.indexOf(filter.keyword) === -1) {
+					return false;
+				}
+			}
+			if (!filter.rank0 && flay.video.rank === 0) return false;
+			if (!filter.rank1 && flay.video.rank === 1) return false;
+			if (!filter.rank2 && flay.video.rank === 2) return false;
+			if (!filter.rank3 && flay.video.rank === 3) return false;
+			if (!filter.rank4 && flay.video.rank === 4) return false;
+			if (!filter.rank5 && flay.video.rank === 5) return false;
+
+			return true;
+		});
+	}
 };
