@@ -42,6 +42,11 @@ router.post('/flay/:opus/play', function (req, res, next) {
 	res.status(204).send();
 });
 
+router.get('/flay/pick', (req, res, next) => {
+	const flayList = flayService.filter(req.body);
+	res.json(flayList[Math.floor(Math.random() * flayList.length)]);
+});
+
 /* ---- video ---- */
 
 router.get('/video', function (req, res, next) {
